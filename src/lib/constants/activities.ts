@@ -1,0 +1,66 @@
+export const WELLBEING_ACTIVITIES = [
+  {
+    type: "sport",
+    label: "Sport",
+    suggestions: [
+      "Course a pied",
+      "Salle de sport",
+      "Yoga",
+      "Natation",
+      "Football",
+      "Basketball",
+      "Escalade",
+      "Velo",
+    ],
+    color: "sport",
+    icon: "Dumbbell",
+  },
+  {
+    type: "music",
+    label: "Musique",
+    suggestions: [
+      "Pratique instrumentale",
+      "Ecoute active",
+      "Concert",
+      "Jam session",
+    ],
+    color: "social",
+    icon: "Music",
+  },
+  {
+    type: "gaming",
+    label: "Gaming",
+    suggestions: [
+      "Session de jeu",
+      "Soiree jeux de societe",
+      "Jeu en ligne avec amis",
+    ],
+    color: "studies",
+    icon: "Gamepad2",
+  },
+  {
+    type: "social",
+    label: "Social",
+    suggestions: [
+      "Cafe avec amis",
+      "Sortie",
+      "Appel famille",
+      "Soiree etudiante",
+    ],
+    color: "social",
+    icon: "Users",
+  },
+  {
+    type: "rest",
+    label: "Repos",
+    suggestions: [
+      "Meditation",
+      "Sieste",
+      "Lecture plaisir",
+      "Promenade",
+      "Detente",
+    ],
+    color: "finance",
+    icon: "Moon",
+  },
+] as const;

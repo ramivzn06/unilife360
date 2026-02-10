@@ -1,0 +1,26 @@
+import { NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+
+export async function GET(request: Request) {
+  const { searchParams, origin } = new URL(request.url);
+  const code = searchParams.get("code");
+  const next = searchParams.get("next") ?? "/finance";
+
+  if (code) {
+    const supabase = await createClient();
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    if (!error) {
+      // Check if user needs onboarding (new OAuth user)
+      const { data: { user } } = await supabase.auth.getUser();
+      const onboardingCompleted = user?.user_metadata?.onboarding_completed;
+
+      if (onboardingCompleted === false) {
+        return NextResponse.redirect(`${origin}/onboarding`);
+      }
+
+      return NextResponse.redirect(`${origin}${next}`);
+    }
+  }
+
+  return NextResponse.redirect(`${origin}/login?error=auth_failed`);
+}

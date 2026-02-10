@@ -1,26 +1,269 @@
 @import "tailwindcss";
+@plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Force dark mode to only apply via .dark class, not prefers-color-scheme */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ============================================
+   UNILIFE 360 - SOFT POP NEO-BRUTALISM
+   Design System Tokens
+   ============================================ */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Typography */
+  --font-heading: "DM Sans", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Module Colors */
+  --color-finance: #86efac;
+  --color-finance-light: #bbf7d0;
+  --color-finance-dark: #4ade80;
+  --color-studies: #d8b4fe;
+  --color-studies-light: #e9d5ff;
+  --color-studies-dark: #c084fc;
+  --color-social: #f9a8d4;
+  --color-social-light: #fbcfe8;
+  --color-social-dark: #f472b6;
+  --color-sport: #fdba74;
+  --color-sport-light: #fed7aa;
+  --color-sport-dark: #fb923c;
+
+  /* Brutalist Shadows (light mode) */
+  --shadow-brutalist: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-brutalist-sm: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-brutalist-lg: 6px 6px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-brutalist-xl: 8px 8px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-brutalist-pressed: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+  --shadow-brutalist-none: 0px 0px 0px 0px rgba(0, 0, 0, 1);
+
+  /* Layout Spacing */
+  --spacing-sidebar: 280px;
+  --spacing-sidebar-collapsed: 72px;
+  --spacing-topbar: 64px;
+  --spacing-mobile-nav: 80px;
+
+  /* Animations */
+  --animate-slide-up: slide-up 0.3s ease-out;
+  --animate-slide-down: slide-down 0.3s ease-out;
+  --animate-press: press 0.1s ease-out forwards;
+  --animate-bounce-in: bounce-in 0.4s ease-out;
+
+  @keyframes slide-up {
+    0% {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-down {
+    0% {
+      transform: translateY(-10px);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes press {
+    0% {
+      transform: translate(0, 0);
+      box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+    }
+
+    100% {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+    }
+  }
+
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+
+    50% {
+      transform: scale(1.02);
+    }
+
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ============================================
+   CSS Custom Properties (Light / Dark)
+   ============================================ */
+
+:root {
+  color-scheme: light;
+  --background: #fefce8;
+  --foreground: #0a0a0a;
+  --card: #ffffff;
+  --card-foreground: #0a0a0a;
+  --primary: #0a0a0a;
+  --primary-foreground: #fefce8;
+  --secondary: #fef9c3;
+  --secondary-foreground: #0a0a0a;
+  --muted: #f5f5f4;
+  --muted-foreground: #737373;
+  --destructive: #fca5a5;
+  --destructive-foreground: #0a0a0a;
+  --border: #0a0a0a;
+  --ring: #0a0a0a;
+  --radius: 0.75rem;
+}
+
+.dark {
+  /* Neutral charcoal palette — restful, no saturated hues */
+  --background: #1a1a1d;
+  --foreground: #e4e4e7;
+  --card: #232326;
+  --card-foreground: #e4e4e7;
+  --primary: #e4e4e7;
+  --primary-foreground: #1a1a1d;
+  --secondary: #2c2c30;
+  --secondary-foreground: #e4e4e7;
+  --muted: #2f2f33;
+  --muted-foreground: #a1a1aa;
+  --destructive: #f87171;
+  --destructive-foreground: #1a1a1d;
+  --border: #3f3f46;
+  --ring: #a1a1aa;
+
+  /* Subtle light-glow shadows for dark mode brutalism */
+  --shadow-brutalist: 4px 4px 0px 0px rgba(255, 255, 255, 0.08);
+  --shadow-brutalist-sm: 2px 2px 0px 0px rgba(255, 255, 255, 0.06);
+  --shadow-brutalist-lg: 6px 6px 0px 0px rgba(255, 255, 255, 0.06);
+  --shadow-brutalist-xl: 8px 8px 0px 0px rgba(255, 255, 255, 0.05);
+  --shadow-brutalist-pressed: 2px 2px 0px 0px rgba(255, 255, 255, 0.04);
+  --shadow-brutalist-none: 0px 0px 0px 0px rgba(0, 0, 0, 0);
+
+  /* Slightly desaturated module colors for dark mode comfort */
+  --color-finance: #4ade80;
+  --color-finance-light: #22c55e;
+  --color-finance-dark: #16a34a;
+  --color-studies: #a78bfa;
+  --color-studies-light: #8b5cf6;
+  --color-studies-dark: #7c3aed;
+  --color-social: #f472b6;
+  --color-social-light: #ec4899;
+  --color-social-dark: #db2777;
+  --color-sport: #fb923c;
+  --color-sport-light: #f97316;
+  --color-sport-dark: #ea580c;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+
+html {
+  background-color: var(--background);
+  color-scheme: light;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark {
+  background-color: #1a1a1d;
+  color-scheme: dark;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  color: var(--foreground);
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+@utility brutalist-card {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-brutalist);
+  background: var(--card);
+}
+
+@utility brutalist-card-hover {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-brutalist);
+  background: var(--card);
+  transition: all 0.15s ease;
+
+  &:hover {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-brutalist-pressed);
+  }
+
+  &:active {
+    transform: translate(4px, 4px);
+    box-shadow: var(--shadow-brutalist-none);
+  }
+}
+
+@utility brutalist-input {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+
+  &:focus {
+    outline: none;
+    box-shadow: var(--shadow-brutalist-sm);
+  }
+}
+
+@utility card-finance {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-brutalist);
+  background: var(--color-finance);
+}
+
+@utility card-studies {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-brutalist);
+  background: var(--color-studies);
+}
+
+@utility card-social {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-brutalist);
+  background: var(--color-social);
+}
+
+@utility card-sport {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-brutalist);
+  background: var(--color-sport);
 }
